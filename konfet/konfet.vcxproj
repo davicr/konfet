@@ -147,6 +147,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LuaChunk.h" />
     <ClInclude Include="LuaHeader.h" />
     <ClInclude Include="LuaInstruction.h" />
     <ClInclude Include="LuaParser.h" />

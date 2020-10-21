@@ -10,7 +10,7 @@ void readFileToBytes(const char* path, std::vector<uint8_t>& outVector)
 {
     std::ifstream file(path, std::ifstream::in | std::ifstream::binary);
     if (!file.is_open())
-        throw std::exception("Failed to open the given file");
+        throw std::exception("failed to open the given file");
     std::copy(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>(), std::back_inserter(outVector));
 }
 
@@ -27,13 +27,18 @@ int main(int argc, char* argv[])
     try {
         readFileToBytes(argv[1], bytecode);
     } catch (std::exception&) {
-        std::cerr << "Failed to open the given file" << '\n';
+        std::cerr << "Failed to open the given bytecode" << '\n';
         return 1;
     }
 
     // Parse the given bytecode
     Konfet::LuaParser parser(bytecode);
-    std::vector<Konfet::LuaInstruction> instructions = parser.Parse();
+    std::vector<Konfet::LuaInstruction> instructions;
+    try {
+        instructions = parser.Parse();
+    } catch (std::exception& e) {
+        std::cerr << "Failed to parse the given bytecode: " << e.what() << '\n';
+    }
 
     return 0;
 }

@@ -56,9 +56,16 @@ enum class InstructionOpcode {
 class LuaInstruction {
 public:
     LuaInstruction(uint32_t op);
+    InstructionOpcode getOpcode();
+    uint32_t getArgA();
+    uint32_t getArgB();
+    uint32_t getArgC();
+    uint32_t getArgBx();
+    int32_t getArgSignedBx();
     friend std::ostream& operator<<(std::ostream& os, LuaInstruction instruction);
 
 private:
+    uint32_t m_encodedInstruction;
     InstructionOpcode m_opcode;
     InstructionType m_type;
 };
