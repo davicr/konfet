@@ -1,7 +1,9 @@
 #include "LuaParser.h"
 #include "LuaChunk.h"
+#include "LuaConstant.h"
 #include "LuaHeader.h"
 #include "LuaInstruction.h"
+#include "LuaLocal.h"
 #include <algorithm>
 #include <functional>
 #include <iostream>
@@ -99,8 +101,54 @@ LuaChunk LuaParser::parseChunk()
     // Parse instructions!
     auto parseInstruction = [](uint32_t ins) { return LuaInstruction(ins); };
     chunk.instructions = readList<LuaInstruction, uint32_t>(parseInstruction);
-    for (auto ins : chunk.instructions)
-        std::cout << ins << '\n';
+
+    // Parse constants!
+    int sizeConstants = readPod<int>();
+    for (int i = 0; i < sizeConstants; i++) {
+        ConstantType constantType = readPod<ConstantType>();
+        LuaConstant constant;
+        switch (static_cast<ConstantType>(constantType)) {
+        case ConstantType::LUA_TNIL:
+            constant = std::monostate();
+            break;
+        case ConstantType::LUA_TBOOLEAN:
+            constant = readPod<bool>();
+            break;
+        case ConstantType::LUA_TNUMBER:
+            constant = readPod<double>();
+            break;
+        case ConstantType::LUA_TSTRING:
+            constant = readLuaString();
+            break;
+        default:
+            throw std::exception("non-recognized constant type");
+        }
+        chunk.constants.push_back(constant);
+    }
+
+    // Parse further chunks!
+    int sizeChunks = readPod<int>();
+    for (int i = 0; i < sizeChunks; i++)
+        chunk.protos.push_back(parseChunk());
+
+    // Parse source line positions!
+    chunk.sourceLines = readPodList<int>();
+
+    // Parse locals!
+    int sizeLocals = readPod<int>();
+    for (int i = 0; i < sizeLocals; i++) {
+        LuaLocal local = {
+            readLuaString(), // name
+            1 + readPod<uint32_t>(), // startPc
+            1 + readPod<uint32_t>() // endPc
+        };
+        chunk.locals.push_back(local);
+    }
+
+    // Parse upvalues!
+    int sizeUpvalues = readPod<int>();
+    for (int i = 0; i < sizeUpvalues; i++)
+        chunk.upvalues.push_back(readLuaString());
 
     return chunk;
 }

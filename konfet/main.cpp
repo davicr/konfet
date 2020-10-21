@@ -14,6 +14,30 @@ void readFileToBytes(const char* path, std::vector<uint8_t>& outVector)
     std::copy(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>(), std::back_inserter(outVector));
 }
 
+void printChunk(const Konfet::LuaChunk& chunk)
+{
+    std::cout << "source name: " << chunk.sourceName << '\n';
+    std::cout << "line defined: " << chunk.lineDefined << '\n';
+    std::cout << "last line defined: " << chunk.lastLineDefined << '\n';
+    std::cout << "number of upvalues: " << (int)chunk.numUpvalues << '\n';
+    std::cout << "number of parameters: " << (int)chunk.numParameters << '\n';
+    std::cout << "vararg flag: " << (int)chunk.varargFlags << '\n';
+    std::cout << "maximum stack: " << (int)chunk.maxStackSize << '\n';
+
+    for (auto ins : chunk.instructions)
+        std::cout << "ins: " << ins << '\n';
+    for (auto cons : chunk.constants)
+        std::cout << "cons: " << cons << '\n';
+    for (auto proto : chunk.protos)
+        printChunk(proto);
+    for (auto pos : chunk.sourceLines)
+        std::cout << "pos: " << pos << '\n';
+    for (auto local : chunk.locals)
+        std::cout << "loc: " << local.name << " startPc: " << local.startPc << " endPc: " << local.endPc << '\n';
+    for (auto upvalue : chunk.upvalues)
+        std::cout << "upval: " << upvalue << '\n';
+}
+
 int main(int argc, char* argv[])
 {
     // Requires one argument: path to Lua 5.1 bytecode
@@ -38,7 +62,11 @@ int main(int argc, char* argv[])
         chunk = parser.Parse();
     } catch (std::exception& e) {
         std::cerr << "Failed to parse the given bytecode: " << e.what() << '\n';
+        return 1;
     }
+
+    // let's fucking go!
+    printChunk(chunk);
 
     return 0;
 }

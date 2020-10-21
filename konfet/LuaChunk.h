@@ -1,6 +1,8 @@
 #pragma once
 
+#include "LuaConstant.h"
 #include "LuaInstruction.h"
+#include "LuaLocal.h"
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -16,10 +18,10 @@ struct LuaChunk {
     uint8_t varargFlags;
     uint8_t maxStackSize;
     std::vector<LuaInstruction> instructions;
-    // std::vector<LuaConstant> constants;
+    std::vector<LuaConstant> constants;
     std::vector<LuaChunk> protos;
     std::vector<int> sourceLines;
-    // std::vector<LuaLocal> locals;
+    std::vector<LuaLocal> locals;
     std::vector<std::string> upvalues;
 };
 

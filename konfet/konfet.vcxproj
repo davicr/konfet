@@ -142,14 +142,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LuaConstant.cpp" />
     <ClCompile Include="LuaInstruction.cpp" />
     <ClCompile Include="LuaParser.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LuaChunk.h" />
+    <ClInclude Include="LuaConstant.h" />
     <ClInclude Include="LuaHeader.h" />
     <ClInclude Include="LuaInstruction.h" />
+    <ClInclude Include="LuaLocal.h" />
     <ClInclude Include="LuaParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
