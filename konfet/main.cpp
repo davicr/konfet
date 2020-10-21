@@ -33,9 +33,9 @@ int main(int argc, char* argv[])
 
     // Parse the given bytecode
     Konfet::LuaParser parser(bytecode);
-    std::vector<Konfet::LuaInstruction> instructions;
+    Konfet::LuaChunk chunk;
     try {
-        instructions = parser.Parse();
+        chunk = parser.Parse();
     } catch (std::exception& e) {
         std::cerr << "Failed to parse the given bytecode: " << e.what() << '\n';
     }
