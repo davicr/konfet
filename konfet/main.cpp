@@ -28,14 +28,15 @@ void printChunk(const Konfet::LuaChunk& chunk)
         std::cout << "ins: " << ins << '\n';
     for (auto cons : chunk.constants)
         std::cout << "cons: " << cons << '\n';
-    for (auto proto : chunk.protos)
-        printChunk(proto);
     for (auto pos : chunk.sourceLines)
         std::cout << "pos: " << pos << '\n';
     for (auto local : chunk.locals)
         std::cout << "loc: " << local.name << " startPc: " << local.startPc << " endPc: " << local.endPc << '\n';
     for (auto upvalue : chunk.upvalues)
         std::cout << "upval: " << upvalue << '\n';
+    std::cout << '\n';
+    for (auto proto : chunk.protos)
+        printChunk(proto);
 }
 
 int main(int argc, char* argv[])
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    // Parse the given bytecode
+    // Parse the given bytecode into the top-level chunk
     Konfet::LuaParser parser(bytecode);
     Konfet::LuaChunk chunk;
     try {
@@ -65,8 +66,6 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    // let's fucking go!
     printChunk(chunk);
-
     return 0;
 }

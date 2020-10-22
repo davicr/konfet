@@ -173,10 +173,8 @@ LuaChunk LuaParser::Parse()
     if (memcmp(&header, &supportedHeader, sizeof(LuaHeader)))
         throw std::exception("unsupported Lua header");
 
-    // Read top-level Lua chunk
-    LuaChunk topChunk = parseChunk();
-
-    return topChunk;
+    // Return the top-level Lua chunk
+    return parseChunk();
 }
 
 } // namespace LuaParser
