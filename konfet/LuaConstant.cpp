@@ -15,13 +15,13 @@ std::ostream& operator<<(std::ostream& os, LuaConstant constant)
         os << "(nil)";
         break;
     case ConstantType::LUA_TBOOLEAN:
-        os << std::get<bool>(constant.value);
+        os << std::get<bool>(constant.m_value);
         break;
     case ConstantType::LUA_TNUMBER:
-        os << std::get<double>(constant.value);
+        os << std::get<double>(constant.m_value);
         break;
     case ConstantType::LUA_TSTRING:
-        os << std::get<std::string>(constant.value);
+        os << std::get<std::string>(constant.m_value);
         break;
     default:
         throw std::exception("trying to stream uninitialized constant");
@@ -30,13 +30,13 @@ std::ostream& operator<<(std::ostream& os, LuaConstant constant)
 
 void LuaConstant::setValue(const ValueType newValue)
 {
-    value = newValue;
-    hasValue = true;
+    m_value = newValue;
+    m_hasValue = true;
 }
 
 bool LuaConstant::isNil()
 {
-    return !empty() && std::holds_alternative<std::monostate>(value);
+    return !empty() && std::holds_alternative<std::monostate>(m_value);
 }
 
 ConstantType LuaConstant::type()
@@ -45,7 +45,7 @@ ConstantType LuaConstant::type()
         throw std::exception("cannot get type of uninitialized constant");
     }
 
-    switch (value.index()) {
+    switch (m_value.index()) {
     case 0:
         return ConstantType::LUA_TNIL;
     case 1:
@@ -61,7 +61,7 @@ ConstantType LuaConstant::type()
 
 bool LuaConstant::empty()
 {
-    return !hasValue;
+    return !m_hasValue;
 }
 
 } // namespace Konfet

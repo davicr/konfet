@@ -29,8 +29,8 @@ public:
     ConstantType type();
 
 private:
-    bool hasValue;
-    ValueType value;
+    bool m_hasValue;
+    ValueType m_value;
 };
 
 } // namespace Konfet
