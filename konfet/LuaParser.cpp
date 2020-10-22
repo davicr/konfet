@@ -177,4 +177,4 @@ LuaChunk LuaParser::Parse()
     return parseChunk();
 }
 
-} // namespace LuaParser
+} // namespace Konfet

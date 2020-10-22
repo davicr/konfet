@@ -65,7 +65,9 @@ int main(int argc, char* argv[])
         std::cerr << "Failed to parse the given bytecode: " << e.what() << '\n';
         return 1;
     }
-
     printChunk(chunk);
+
+    // TODO: Generate graph for given top-level chunk
+
     return 0;
 }

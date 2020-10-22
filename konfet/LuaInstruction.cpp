@@ -151,4 +151,4 @@ std::ostream& operator<<(std::ostream& os, LuaInstruction instruction)
     return os;
 }
 
-} // namespace LuaInstruction
+} // namespace Konfet

@@ -35,4 +35,4 @@ private:
     std::vector<uint8_t>::iterator m_dataIterator;
 };
 
-} // namespace LuaParser
+} // namespace Konfet

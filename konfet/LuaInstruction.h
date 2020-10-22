@@ -70,4 +70,4 @@ private:
     InstructionType m_type;
 };
 
-} // namespace LuaInstruction
+} // namespace Konfet
