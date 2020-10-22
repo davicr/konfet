@@ -24,18 +24,18 @@ void printChunk(const Konfet::LuaChunk& chunk)
     std::cout << "vararg flag: " << (int)chunk.varargFlags << '\n';
     std::cout << "maximum stack: " << (int)chunk.maxStackSize << '\n';
 
-    for (auto ins : chunk.instructions)
+    for (const auto& ins : chunk.instructions)
         std::cout << "ins: " << ins << '\n';
-    for (auto cons : chunk.constants)
+    for (const auto& cons : chunk.constants)
         std::cout << "cons: " << cons << '\n';
-    for (auto pos : chunk.sourceLines)
+    for (const auto& pos : chunk.sourceLines)
         std::cout << "pos: " << pos << '\n';
-    for (auto local : chunk.locals)
+    for (const auto& local : chunk.locals)
         std::cout << "loc: " << local.name << " startPc: " << local.startPc << " endPc: " << local.endPc << '\n';
-    for (auto upvalue : chunk.upvalues)
+    for (const auto& upvalue : chunk.upvalues)
         std::cout << "upval: " << upvalue << '\n';
     std::cout << '\n';
-    for (auto proto : chunk.protos)
+    for (const auto& proto : chunk.protos)
         printChunk(proto);
 }
 
