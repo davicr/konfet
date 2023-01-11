@@ -29,7 +29,7 @@ public:
     ConstantType type();
 
 private:
-    bool m_hasValue;
+    bool m_hasValue = false;
     ValueType m_value;
 };
 

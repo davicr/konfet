@@ -12,17 +12,13 @@ std::ostream& operator<<(std::ostream& os, LuaConstant constant)
 {
     switch (constant.type()) {
     case ConstantType::LUA_TNIL:
-        os << "(nil)";
-        break;
+        return os << "(nil)";
     case ConstantType::LUA_TBOOLEAN:
-        os << std::get<bool>(constant.m_value);
-        break;
+        return os << std::get<bool>(constant.m_value);
     case ConstantType::LUA_TNUMBER:
-        os << std::get<double>(constant.m_value);
-        break;
+        return os << std::get<double>(constant.m_value);
     case ConstantType::LUA_TSTRING:
-        os << std::get<std::string>(constant.m_value);
-        break;
+        return os << std::get<std::string>(constant.m_value);
     default:
         throw std::exception("trying to stream uninitialized constant");
     }

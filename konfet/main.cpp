@@ -14,7 +14,7 @@ void readFileToBytes(const char* path, std::vector<uint8_t>& outVector)
     std::copy(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>(), std::back_inserter(outVector));
 }
 
-void printChunk(const Konfet::LuaChunk& chunk)
+__declspec(noinline) void printChunk(const Konfet::LuaChunk& chunk)
 {
     std::cout << "source name: " << chunk.sourceName << '\n';
     std::cout << "line defined: " << chunk.lineDefined << '\n';
